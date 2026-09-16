@@ -19,8 +19,7 @@
     "express": "^5.2.1",
     "mysql2": "^3.20.0",
     "openai": "^6.33.0",
-    "replicate": "^1.4.0",
-    "uuid": "^13.0.0"
+    "replicate": "^1.4.0"
   },
   "devDependencies": {
     "@netlify/functions": "^5.1.5",

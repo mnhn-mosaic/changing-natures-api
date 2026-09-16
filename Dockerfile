@@ -1,23 +1,21 @@
-FROM node:18
+FROM node:18 AS process-dev
 
 # Install pnpm and pm2
 RUN npm install -g pnpm pm2
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy package.json and pnpm-lock.yaml
-COPY package.json pnpm-lock.yaml ./
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
 
-# Install dependencies
-RUN pnpm install
+ENTRYPOINT [ "docker-entrypoint" ]
+CMD [ "pm2-dev", "ecosystem.config.js" ]
 
-# Copy PM2 process file and your app's source code
-COPY ecosystem.config.js .
+FROM process-dev AS process
+
 COPY . .
 
-# Expose the port your app runs on
-EXPOSE 3000
+RUN pnpm install
 
-# Start your app with PM2
-CMD ["pm2-runtime", "ecosystem.config.js"]
+CMD [ "pm2-runtime", "--json", "ecosystem.config.js" ]

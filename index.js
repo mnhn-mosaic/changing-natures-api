@@ -45,6 +45,7 @@ async function getAssociatedData(data, field) {
             FROM open_list_values olv
             LEFT JOIN open_list_values_translations olt ON olv.id = olt.open_list_value_id
             WHERE olv.id IN (?)
+            AND olv.deleted_at IS NULL
         `, [data[field]]);
 
         // Organize the data and translations

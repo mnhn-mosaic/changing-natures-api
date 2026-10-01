@@ -13,6 +13,6 @@ jobs:
     with:
       environment: production
       host: 172.20.22.27
-      stack: changing-natures-api
+      stack: changing-natures-game
       repository: changing-natures-api
       branch: main
